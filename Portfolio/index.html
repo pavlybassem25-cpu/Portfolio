@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Name – Video Editor for Promos & Reels</title>
+<meta name="description" content="Video editor specializing in promotional videos and Instagram reels. See the work and get in touch.">
+<meta property="og:title" content="Your Name – Video Editor">
+<meta property="og:description" content="Promo videos and Instagram reels that hold attention.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cobalt:#2338f5; --deep:#1424b8; --paper:#f3f4fa; --ink:#0e1030;
+  --flash:#ffd23f; --pink:#ff5c8a; --muted:#5a5d7a;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"DM Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.6;font-size:17px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--flash);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* nav */
+header{position:absolute;top:0;left:0;right:0;z-index:5}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+.logo{font-family:var(--display);font-weight:800;font-size:1.25rem;text-decoration:none;color:var(--paper)}
+nav ul{display:flex;gap:28px;list-style:none}
+nav ul a{color:var(--paper);text-decoration:none;font-weight:500;font-size:.95rem}
+nav ul a:hover{color:var(--flash)}
+
+/* hero */
+.hero{background:var(--cobalt);color:var(--paper);padding:150px 0 0;overflow:hidden}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,7.5vw,6rem);line-height:.98;letter-spacing:-.03em;max-width:14ch}
+.hero p{max-width:46ch;margin-top:26px;font-size:1.15rem;color:#dfe3ff}
+.cta-row{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.btn{display:inline-block;padding:14px 26px;border-radius:999px;font-weight:700;text-decoration:none;font-size:1rem;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--flash);color:var(--ink)}
+.btn.ghost{border:2px solid var(--paper);color:var(--paper)}
+
+/* timeline — the one signature element */
+.timeline{margin-top:70px;background:var(--deep);border-top:2px solid rgba(255,255,255,.25);padding:18px 0 26px;position:relative}
+.tl-top{display:flex;justify-content:space-between;font-size:.8rem;color:#aab3ff;margin-bottom:10px;font-variant-numeric:tabular-nums}
+.track{display:flex;gap:4px;height:46px;margin-bottom:6px}
+.clip{border-radius:6px;display:flex;align-items:center;padding:0 12px;font-size:.78rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden}
+.c1{background:var(--flash)} .c2{background:var(--pink)} .c3{background:#9fb0ff} .c4{background:var(--paper)} .c5{background:#7ee0c3}
+.playhead{position:absolute;top:0;bottom:0;width:2px;background:var(--pink);left:0;animation:scrub 9s linear infinite}
+.playhead::before{content:"";position:absolute;top:-1px;left:-7px;border:8px solid transparent;border-top:12px solid var(--pink)}
+@keyframes scrub{from{left:0}to{left:100%}}
+
+/* sections */
+section{padding:96px 0}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(2rem,4.5vw,3.2rem);letter-spacing:-.02em;line-height:1.05;margin-bottom:14px}
+.lead{color:var(--muted);max-width:52ch;margin-bottom:44px}
+
+/* work */
+.filters{display:flex;gap:10px;margin-bottom:30px;flex-wrap:wrap}
+.filters button{font:inherit;font-weight:700;font-size:.92rem;padding:9px 20px;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:22px}
+.card{border:0;background:none;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.thumb{aspect-ratio:9/16;border-radius:16px;position:relative;overflow:hidden;background:var(--c,var(--cobalt));display:flex;align-items:flex-end;padding:16px;transition:transform .2s}
+.card:hover .thumb{transform:scale(1.03)}
+.thumb img,.thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card.wide{grid-column:span 2}
+.card.wide .thumb{aspect-ratio:16/9}
+dialog.wide{max-width:min(92vw,900px)}
+dialog.wide .modal video,dialog.wide .modal iframe{aspect-ratio:16/9}
+@media(max-width:560px){.card.wide{grid-column:auto}}
+.play{position:absolute;top:50%;left:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:var(--paper);display:grid;place-items:center;z-index:1}
+.play::after{content:"";margin-left:4px;border-left:16px solid var(--ink);border-top:10px solid transparent;border-bottom:10px solid transparent}
+.tag{position:relative;z-index:1;background:var(--paper);color:var(--ink);font-size:.78rem;font-weight:700;padding:4px 12px;border-radius:999px}
+.card h3{font-family:var(--display);font-size:1.1rem;margin-top:12px}
+.card p{font-size:.92rem;color:var(--muted)}
+
+/* services */
+.services{background:var(--ink);color:var(--paper)}
+.services .lead{color:#b9bcd8}
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.svc div{background:#191c4a;border-radius:18px;padding:30px}
+.svc h3{font-family:var(--display);font-size:1.4rem;margin-bottom:8px;color:var(--flash)}
+.svc p{color:#c8cbe6;font-size:.98rem}
+
+/* about */
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:center}
+.side{display:grid;gap:22px;justify-items:center}
+.photo{width:min(300px,70vw);aspect-ratio:1;border-radius:50%;object-fit:cover;object-position:center 30%;border:6px solid var(--flash);box-shadow:10px 10px 0 var(--cobalt);display:block}
+.stats{display:grid;gap:16px;width:100%}
+.stat{background:var(--flash);border-radius:18px;padding:22px 26px}
+.stat:nth-child(2){background:var(--pink)}
+.stat:nth-child(3){background:#9fb0ff}
+.stat b{font-family:var(--display);font-size:2.2rem;display:block;line-height:1.1}
+.about p+p{margin-top:14px}
+
+/* contact */
+.contact{background:var(--cobalt);color:var(--paper);text-align:center}
+.contact h2{margin:0 auto 16px;max-width:16ch;font-size:clamp(2.4rem,6vw,4.6rem)}
+.contact p{color:#dfe3ff;margin-bottom:32px}
+.links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+footer{background:var(--ink);color:#9a9dbd;padding:24px 0;font-size:.9rem;text-align:center}
+
+/* modal */
+dialog{border:0;background:transparent;margin:auto;max-width:min(92vw,420px);width:100%}
+dialog::backdrop{background:rgba(14,16,48,.88)}
+.modal{position:relative}
+.modal video,.modal iframe{width:100%;aspect-ratio:9/16;border-radius:16px;background:#000;border:0;display:block}
+.close{position:absolute;top:-46px;right:0;background:var(--paper);border:0;border-radius:999px;padding:8px 18px;font:inherit;font-weight:700;cursor:pointer}
+
+@media(max-width:760px){
+  nav ul{gap:16px}nav ul li:nth-child(n+3){display:none}
+  .about{grid-template-columns:1fr}
+  section{padding:68px 0}
+}
+@media(prefers-reduced-motion:reduce){.playhead{animation:none;left:35%}html{scroll-behavior:auto}.btn,.thumb{transition:none}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap"><nav>
+  <a class="logo" href="#top">PAVLY BASSEM</a>
+  <ul>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav></div></header>
+
+<main id="top">
+<div class="hero">
+  <div class="wrap">
+    <h1>Videos people watch to the end.</h1>
+    <p>I’m a video editor who cuts promotional videos and Instagram reels for brands and creators. Fast pacing, clean sound, and a hook in the first second.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#work">See my work</a>
+      <a class="btn ghost" href="#contact">Book an edit</a>
+    </div>
+  </div>
+  <div class="timeline" aria-hidden="true">
+    <div class="wrap">
+      <div class="tl-top"><span>00:00</span><span>Hook</span><span>Story</span><span>Offer</span><span>00:30</span></div>
+      <div class="track">
+        <div class="clip c1" style="flex:1.2">Hook</div>
+        <div class="clip c2" style="flex:2">B-roll</div>
+        <div class="clip c3" style="flex:1.6">Captions</div>
+        <div class="clip c4" style="flex:2.4">Product shot</div>
+        <div class="clip c5" style="flex:1.2">Call to action</div>
+      </div>
+      <div class="track" style="height:22px">
+        <div class="clip c3" style="flex:5;opacity:.55"></div>
+        <div class="clip c1" style="flex:3;opacity:.55"></div>
+      </div>
+    </div>
+    <div class="playhead"></div>
+  </div>
+</div>
+
+<section id="work"><div class="wrap">
+  <h2>Selected work</h2>
+  <p class="lead">Tap a video to watch it.</p>
+  <div class="filters" role="group" aria-label="Filter work">
+    <button aria-pressed="true" data-f="all">All</button>
+    <button aria-pressed="false" data-f="Reel">Reels</button>
+    <button aria-pressed="false" data-f="Promo">Promo videos</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section class="services" id="services"><div class="wrap">
+  <h2>What I do</h2>
+  <p class="lead">Send me the footage. I send back something ready to post.</p>
+  <div class="svc">
+    <div><h3>Instagram reels</h3><p>Vertical edits with strong hooks, beat-synced cuts, captions, and sound design built for the feed.</p></div>
+    <div><h3>Promotional videos</h3><p>Ads and brand videos for products, launches, and offers, cut to the length your platform needs.</p></div>
+    <div><h3>Motion and color</h3><p>Color correction, text animation, and transitions that match your brand and keep the look consistent.</p></div>
+  </div>
+</div></section>
+
+<section id="about"><div class="wrap about">
+  <div>
+    <h2>Hi, I’m Pavly.</h2>
+    <p>I’ve been editing for about two years, focused on promotional videos and Instagram reels. I like short formats where every second has to earn its place.</p>
+    <p>Edit this paragraph with your own story: the tools you use, the kinds of clients you’ve worked with, and how you like to work.</p>
+  </div>
+  <div class="side">
+  <img class="photo" src="C:\Users\p.rasmy_gic\Downloads\Portfolio\img\profile.jpg" alt="Portrait of the video editor" width="300" height="300">
+  <div class="stats">
+    <div class="stat"><b>2 years</b>editing experience</div>
+    <div class="stat"><b>Reels + Promos</b>my specialty</div>
+    <div class="stat"><b>Fast turnaround</b>replace with your own detail</div>
+  </div>
+  </div>
+</div></section>
+
+<section class="contact" id="contact"><div class="wrap">
+  <h2>Let’s make your next video.</h2>
+  <p>Tell me what you’re working on and when you need it.</p>
+  <div class="links">
+    <a class="btn primary" href="mailto:pavlybassem18@gmail.com">Email me</a>
+    <a class="btn ghost" href="https://www.instagram.com/pavly_bassem" target="_blank" rel="noopener">Instagram</a>
+    <a class="btn ghost" href="https://wa.me/01223523881" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">© <span id="yr"></span> PAVLY. All rights reserved.</div></footer>
+
+<dialog id="dlg"><div class="modal">
+  <button class="close" id="closeBtn">Close</button>
+  <div id="player"></div>
+</div></dialog>
+
+<script>
+/* ===== EDIT YOUR PROJECTS HERE =====
+   type: "Reel" or "Promo"
+   video: path to an .mp4 in the same folder (e.g. "videos/reel1.mp4")
+          OR a YouTube embed URL (e.g. "https://www.youtube.com/embed/VIDEO_ID")
+   poster: optional thumbnail image path (e.g. "img/reel1.jpg")
+   color: background color shown until you add a poster */
+const projects = [
+  {title:"Attwa", client:"Client or brand", type:"Reel",  video:"https://drive.google.com/file/d/1XRlIrjYWGy9PapTk9Wa8B0Ttso0qhNUB/view?usp=sharing", poster:"img/reel 1.jpg", color:"#2338f5"},
+  {title:"فرغلي", client:"Client or brand", type:"Reel",  video:"https://drive.google.com/file/d/1k6UkR0JbjGSH-6o0KD8CpP5Vyo6D32j8/view?usp=sharing", poster:"img/reel 2.png", color:"#0e1030"},
+  {title:"Beauty Center", client:"Client or brand", type:"Reel",  video:"https://drive.google.com/file/d/17XQ2Uj0P-dN2tbD9SJsWOLNkG81w6xyM/view?usp=sharing", poster:"img/reel 3.png", color:"#7a5cff"},
+  {title:"Vet Clinic", client:"Client or brand", type:"Promo", video:"https://drive.google.com/file/d/1xGW89BUuJl8HHQR5USOE8uIlR64JjKps/view?usp=sharing", poster:"img/promo 1.png", color:"#ff5c8a", wide:true},
+  {title:"Course Center", client:"Client or brand", type:"Promo", video:"https://drive.google.com/file/d/1xB8MTIcWVR6VSskLmX30aEp9gByFBD3_/view?usp=sharing", poster:"img/promo 2.png", color:"#e08a00", wide:true},
+  {title:"Chat-Gpt", client:"Client or brand", type:"Promo",  video:"https://drive.google.com/file/d/1i9Qe_hAL2_oMVtufbJuRLdyhCr4K83Cu/view?usp=sharing", poster:"img/promo 3.png", color:"#14a37f", wide:true}
+];
+
+const grid = document.getElementById("grid");
+const dlg = document.getElementById("dlg");
+const player = document.getElementById("player");
+
+function render(filter){
+  grid.innerHTML = "";
+  projects.forEach((p,i)=>{
+    if(filter !== "all" && p.type !== filter) return;
+    const b = document.createElement("button");
+    b.className = "card" + (p.wide ? " wide" : "");
+    b.setAttribute("aria-label","Play "+p.title);
+    b.innerHTML = '<div class="thumb" style="--c:'+p.color+'">'
+      + (p.poster ? '<img src="'+p.poster+'" alt="" loading="lazy">' : '')
+      + '<span class="play"></span><span class="tag">'+(p.type==="Reel"?"Reel":"Promo")+'</span></div>'
+      + '<h3>'+p.title+'</h3><p>'+p.client+'</p>';
+    b.onclick = ()=>openProject(i);
+    grid.appendChild(b);
+  });
+}
+
+function openProject(i){
+  const v = projects[i].video;
+  if(v && v.includes("drive.google.com")){ window.open(v, "_blank", "noopener"); return; }
+  if(!v){ player.innerHTML = '<p style="color:#fff;padding:40px 20px;text-align:center">Add your video file for this project in the projects list.</p>'; }
+  else if(v.includes("youtube.com/embed")){ player.innerHTML = '<iframe src="'+v+'?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen title="'+projects[i].title+'"></iframe>'; }
+  else { player.innerHTML = '<video src="'+v+'" controls autoplay playsinline></video>'; }
+  dlg.classList.toggle("wide", !!projects[i].wide);
+  dlg.showModal();
+}
+function closeDlg(){ dlg.close(); }
+dlg.addEventListener("close",()=>{ player.innerHTML=""; });
+document.getElementById("closeBtn").onclick = closeDlg;
+dlg.addEventListener("click",e=>{ if(e.target===dlg) closeDlg(); });
+
+document.querySelectorAll(".filters button").forEach(btn=>{
+  btn.onclick = ()=>{
+    document.querySelectorAll(".filters button").forEach(x=>x.setAttribute("aria-pressed","false"));
+    btn.setAttribute("aria-pressed","true");
+    render(btn.dataset.f);
+  };
+});
+
+document.getElementById("yr").textContent = new Date().getFullYear();
+render("all");
+</script>
+</body>
+</html>
