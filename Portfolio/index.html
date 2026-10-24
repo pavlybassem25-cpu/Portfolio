@@ -33,7 +33,14 @@ nav ul a{color:var(--paper);text-decoration:none;font-weight:500;font-size:.95re
 nav ul a:hover{color:var(--flash)}
 
 /* hero */
-.hero{background:var(--cobalt);color:var(--paper);padding:150px 0 0;overflow:hidden}
+.hero{
+  background:
+    linear-gradient(90deg, rgba(14,16,48,.75) 0%, rgba(14,16,48,.35) 55%, rgba(14,16,48,0) 100%),
+    linear-gradient(rgba(20,36,184,.55), rgba(14,16,48,.65)),
+    url("img/hero.jpg") center/cover no-repeat;
+  background-color:var(--cobalt);
+  color:var(--paper);padding:150px 0 0;overflow:hidden
+}
 .hero h1{font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,7.5vw,6rem);line-height:.98;letter-spacing:-.03em;max-width:14ch}
 .hero p{max-width:46ch;margin-top:26px;font-size:1.15rem;color:#dfe3ff}
 .cta-row{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
@@ -115,7 +122,6 @@ dialog::backdrop{background:rgba(14,16,48,.88)}
   .about{grid-template-columns:1fr}
   section{padding:68px 0}
 }
-@media(prefers-reduced-motion:reduce){.playhead{animation:none;left:35%}html{scroll-behavior:auto}.btn,.thumb{transition:none}}
 </style>
 </head>
 <body>
