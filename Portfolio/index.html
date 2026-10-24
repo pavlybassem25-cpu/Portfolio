@@ -75,7 +75,9 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(2rem,4.5vw,3.2rem)
 .thumb{aspect-ratio:9/16;border-radius:16px;position:relative;overflow:hidden;background:var(--c,var(--cobalt));display:flex;align-items:flex-end;padding:16px;transition:transform .2s}
 .card:hover .thumb{transform:scale(1.03)}
 .thumb img,.thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.card.wide{grid-column:span 2}
+.grid.wide-grid{grid-template-columns:repeat(3,1fr);margin-bottom:34px}
+@media(max-width:900px){.grid.wide-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.grid.wide-grid{grid-template-columns:1fr}}
 .card.wide .thumb{aspect-ratio:16/9}
 dialog.wide{max-width:min(92vw,900px)}
 dialog.wide .modal video,dialog.wide .modal iframe{aspect-ratio:16/9}
@@ -178,7 +180,8 @@ dialog::backdrop{background:rgba(14,16,48,.88)}
     <button aria-pressed="false" data-f="Reel">Reels</button>
     <button aria-pressed="false" data-f="Promo">Promo videos</button>
   </div>
-  <div class="grid" id="grid"></div>
+<div class="grid wide-grid" id="gridWide"></div>
+<div class="grid" id="grid"></div>
 </div></section>
 
 <section class="services" id="services"><div class="wrap">
@@ -245,8 +248,9 @@ const grid = document.getElementById("grid");
 const dlg = document.getElementById("dlg");
 const player = document.getElementById("player");
 
+const gridWide = document.getElementById("gridWide");
 function render(filter){
-  grid.innerHTML = "";
+  grid.innerHTML = ""; gridWide.innerHTML = "";
   projects.forEach((p,i)=>{
     if(filter !== "all" && p.type !== filter) return;
     const b = document.createElement("button");
@@ -257,7 +261,7 @@ function render(filter){
       + '<span class="play"></span><span class="tag">'+(p.type==="Reel"?"Reel":"Promo")+'</span></div>'
       + '<h3>'+p.title+'</h3><p>'+p.client+'</p>';
     b.onclick = ()=>openProject(i);
-    grid.appendChild(b);
+    (p.wide ? gridWide : grid).appendChild(b);
   });
 }
 
