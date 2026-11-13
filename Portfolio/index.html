@@ -77,8 +77,7 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(2rem,4.5vw,3.2rem)
 .thumb img,.thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .grid.wide-grid{grid-template-columns:repeat(3,1fr);margin-bottom:34px}
 @media(max-width:900px){.grid.wide-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.grid.wide-grid{grid-template-columns:1fr}}
-.card.wide .thumb{aspect-ratio:16/9}
+@media(max-width:560px){.grid.wide-grid{grid-template-columns:1fr}}.card.wide .thumb{aspect-ratio:16/9}
 dialog.wide{max-width:min(92vw,900px)}
 dialog.wide .modal video,dialog.wide .modal iframe{aspect-ratio:16/9}
 @media(max-width:560px){.card.wide{grid-column:auto}}
@@ -128,6 +127,22 @@ dialog::backdrop{background:rgba(14,16,48,.88)}
   .hero{padding-top:150px}
   .about{grid-template-columns:1fr}
   section{padding:68px 0}
+}
+.case{padding:40px 0 96px}
+.case-panel{background:var(--ink);color:var(--paper);border-radius:28px;padding:56px 44px}
+.eyebrow{font-weight:700;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:var(--flash);margin-bottom:10px}
+.case .lead{color:#b9bcd8;margin-bottom:22px}
+.case-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px}
+.case-meta span{border:1.5px solid #4a4e86;border-radius:999px;padding:6px 16px;font-size:.85rem;font-weight:700}
+.case-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.case-grid.land{grid-template-columns:repeat(3,1fr)}
+.case .card p{color:#b9bcd8}
+@media(max-width:900px){
+  .case-panel{padding:36px 22px}
+  .case-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:10px}
+  .case-grid .card{flex:0 0 62%;scroll-snap-align:start}
+  .case-grid.land{display:grid;grid-template-columns:1fr;overflow:visible}
+  .case-grid.land .card,.case-grid.land .card:nth-child(-n+2){grid-column:auto;flex:none}
 }
 </style>
 </head>
@@ -180,8 +195,17 @@ dialog::backdrop{background:rgba(14,16,48,.88)}
     <button aria-pressed="false" data-f="Reel">Reels</button>
     <button aria-pressed="false" data-f="Promo">Promo videos</button>
   </div>
-<div class="grid wide-grid" id="gridWide"></div>
+  <div class="grid wide-grid" id="gridWide"></div>
 <div class="grid" id="grid"></div>
+</div></section>
+<section class="case" id="eagle"><div class="wrap">
+  <div class="case-panel">
+    <p class="eyebrow">Featured project</p>
+    <h2>Eagle Real Estate Development</h2>
+    <p class="lead">Write two short sentences here about what you made for Eagle and what the videos were for.</p>
+    <div class="case-meta"><span>5 videos</span><span>Real estate</span><span>Promo</span></div>
+    <div class="case-grid" id="eagleGrid"></div>
+  </div>
 </div></section>
 
 <section class="services" id="services"><div class="wrap">
@@ -223,11 +247,6 @@ dialog::backdrop{background:rgba(14,16,48,.88)}
 
 <footer><div class="wrap">© <span id="yr"></span> PAVLY. All rights reserved.</div></footer>
 
-<dialog id="dlg"><div class="modal">
-  <button class="close" id="closeBtn">Close</button>
-  <div id="player"></div>
-</div></dialog>
-
 <script>
 /* ===== EDIT YOUR PROJECTS HERE =====
    type: "Reel" or "Promo"
@@ -247,8 +266,6 @@ const projects = [
 ];
 
 const grid = document.getElementById("grid");
-const dlg = document.getElementById("dlg");
-const player = document.getElementById("player");
 
 const gridWide = document.getElementById("gridWide");
 function render(filter){
@@ -257,7 +274,7 @@ function render(filter){
     if(filter !== "all" && p.type !== filter) return;
     const b = document.createElement("button");
     b.className = "card" + (p.wide ? " wide" : "");
-    b.setAttribute("aria-label","Play "+p.title);
+    b.setAttribute("aria-label","Watch "+p.title+(p.video ? " (opens in a new tab)" : ""));
     b.innerHTML = '<div class="thumb" style="--c:'+p.color+'">'
       + (p.poster ? '<img src="'+p.poster+'" alt="" loading="lazy">' : '')
       + '<span class="play"></span><span class="tag">'+(p.type==="Reel"?"Reel":"Promo")+'</span></div>'
@@ -267,19 +284,13 @@ function render(filter){
   });
 }
 
-function openProject(i){
-  const v = projects[i].video;
-  if(v && v.includes("drive.google.com")){ window.open(v, "_blank", "noopener"); return; }
-  if(!v){ player.innerHTML = '<p style="color:#fff;padding:40px 20px;text-align:center">Add your video file for this project in the projects list.</p>'; }
-  else if(v.includes("youtube.com/embed")){ player.innerHTML = '<iframe src="'+v+'?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen title="'+projects[i].title+'"></iframe>'; }
-  else { player.innerHTML = '<video src="'+v+'" controls autoplay playsinline></video>'; }
-  dlg.classList.toggle("wide", !!projects[i].wide);
-  dlg.showModal();
+function openProject(i){ openVideo(projects[i]); }
+function openVideo(p){
+  // No link added yet -> do nothing
+  if(!p.video) return;
+  // Open the video's link (Google Drive, YouTube, etc.) in a new tab
+  window.open(p.video, "_blank", "noopener");
 }
-function closeDlg(){ dlg.close(); }
-dlg.addEventListener("close",()=>{ player.innerHTML=""; });
-document.getElementById("closeBtn").onclick = closeDlg;
-dlg.addEventListener("click",e=>{ if(e.target===dlg) closeDlg(); });
 
 document.querySelectorAll(".filters button").forEach(btn=>{
   btn.onclick = ()=>{
@@ -290,6 +301,25 @@ document.querySelectorAll(".filters button").forEach(btn=>{
 });
 
 document.getElementById("yr").textContent = new Date().getFullYear();
+const eagle = [
+  {title:"Eagle – Video 1", client:"Eagle Real Estate Development", type:"Promo", video:"https://drive.google.com/file/d/100Whe4BVWimSQpzSle12e21m7yZlomz3/view?usp=sharing", poster:"img/golden.png", color:"#2338f5", wide:true},
+  {title:"Eagle – Video 2", client:"Eagle Real Estate Development", type:"Promo", video:"", poster:"img/green.png", color:"#2338f5", wide:true},
+  {title:"Eagle – Video 3", client:"Eagle Real Estate Development", type:"Promo", video:"", poster:"img/rehab.png", color:"#2338f5", wide:true},
+  {title:"Eagle – Video 4", client:"Eagle Real Estate Development", type:"Promo", video:"", poster:"img/review.png", color:"#2338f5", wide:true},
+  {title:"Eagle – Video 5", client:"Eagle Real Estate Development", type:"Promo", video:"", poster:"img/show.png", color:"#2338f5", wide:true}
+];
+const eagleGrid = document.getElementById("eagleGrid");
+if(eagle.every(p=>p.wide)) eagleGrid.classList.add("land");
+eagle.forEach(p=>{
+  const b = document.createElement("button");
+  b.className = "card" + (p.wide ? " wide" : "");
+  b.setAttribute("aria-label","Watch "+p.title+(p.video ? " (opens in a new tab)" : ""));
+  b.innerHTML = '<div class="thumb" style="--c:'+p.color+'">'
+    + (p.poster ? '<img src="'+p.poster+'" alt="" loading="lazy">' : '')
+    + '<span class="play"></span></div><h3>'+p.title+'</h3>';
+  b.onclick = ()=>openVideo(p);
+  eagleGrid.appendChild(b);
+});
 render("all");
 </script>
 </body>
