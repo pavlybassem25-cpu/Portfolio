@@ -71,7 +71,7 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(2rem,4.5vw,3.2rem)
 .filters button{font:inherit;font-weight:700;font-size:.92rem;padding:9px 20px;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
 .filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:22px}
-.card{border:0;background:none;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.card{border:0;background:none;text-align:center;font:inherit;color:inherit;cursor:pointer}
 .thumb{aspect-ratio:9/16;border-radius:16px;position:relative;overflow:hidden;background:var(--c,var(--cobalt));display:flex;align-items:flex-end;padding:16px;transition:transform .2s}
 .card:hover .thumb{transform:scale(1.03)}
 .thumb img,.thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -137,6 +137,9 @@ dialog::backdrop{background:rgba(14,16,48,.88)}
 .case-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
 .case-grid.land{grid-template-columns:repeat(3,1fr)}
 .case .card p{color:#b9bcd8}
+.case-panel{position:relative}
+.case-logo{position:absolute;top:36px;right:44px;width:140px;height:auto}
+@media(max-width:900px){.case-logo{width:80px;top:22px;right:22px}}
 @media(max-width:900px){
   .case-panel{padding:36px 22px}
   .case-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:10px}
@@ -144,6 +147,26 @@ dialog::backdrop{background:rgba(14,16,48,.88)}
   .case-grid.land{display:grid;grid-template-columns:1fr;overflow:visible}
   .case-grid.land .card,.case-grid.land .card:nth-child(-n+2){grid-column:auto;flex:none}
 }
+/* reviews */
+.reviews{background:var(--cobalt);color:var(--paper);overflow:hidden}
+.reviews .eyebrow{color:var(--flash)}
+.reviews h2{max-width:16ch}
+.reviews .lead{color:#dfe3ff}
+.rv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;align-items:start}
+.rv{position:relative;border-radius:22px;padding:34px 28px 28px;color:var(--ink);background:var(--bg,var(--paper));transition:transform .25s;box-shadow:8px 8px 0 rgba(14,16,48,.35)}
+.rv:nth-child(odd){transform:rotate(-1.2deg)}
+.rv:nth-child(even){transform:rotate(1.2deg);margin-top:18px}
+.rv:hover{transform:rotate(0) translateY(-4px)}
+.rv::before{content:"\201C";position:absolute;top:-8px;left:20px;font-family:var(--display);font-weight:800;font-size:6.5rem;line-height:1;color:var(--ink);opacity:.14}
+.rv .stars{color:var(--ink);letter-spacing:.18em;font-size:1.05rem;margin-bottom:12px}
+.rv blockquote{font-family:var(--display);font-weight:700;font-size:1.18rem;line-height:1.35;margin-bottom:22px}
+.rv .who{display:flex;align-items:center;gap:12px;border-top:2px solid rgba(14,16,48,.18);padding-top:16px}
+.rv .av{flex:none;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-family:var(--display);font-weight:800}
+.rv .who b{display:block;line-height:1.2}
+.rv .who span{font-size:.85rem;opacity:.75}
+.rv-cta{text-align:center;margin-top:52px}
+@media(max-width:560px){.rv:nth-child(n){transform:none;margin-top:0}}
+@media(prefers-reduced-motion:reduce){.rv,.rv:hover{transition:none;transform:none}}
 </style>
 </head>
 <body>
@@ -152,6 +175,7 @@ dialog::backdrop{background:rgba(14,16,48,.88)}
   <a class="logo" href="#top">PAVLY BASSEM</a>
   <ul>
     <li><a href="#work">Work</a></li>
+    <li><a href="#reviews">Reviews</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -200,12 +224,20 @@ dialog::backdrop{background:rgba(14,16,48,.88)}
 </div></section>
 <section class="case" id="eagle"><div class="wrap">
   <div class="case-panel">
+    <img class="case-logo" src="img/eagle-logo.png" alt="Eagle Real Estate Development logo">
     <p class="eyebrow">Featured project</p>
     <h2>Eagle Real Estate Development</h2>
-    <p class="lead">Write two short sentences here about what you made for Eagle and what the videos were for.</p>
+    <p class="lead">Video promos for "Eagle Real Estate Developments" presenting their new 3 big projects : Golden, Green & Rehab Plaza and their clients reviews.</p>
     <div class="case-meta"><span>5 videos</span><span>Real estate</span><span>Promo</span></div>
     <div class="case-grid" id="eagleGrid"></div>
   </div>
+</div></section>
+<section class="reviews" id="reviews"><div class="wrap">
+  <p class="eyebrow">Clients words</p>
+  <h2>Don’t take my word for it.</h2>
+  <p class="lead">Here’s what the people I’ve edited for have to say.</p>
+  <div class="rv-grid" id="rvGrid"></div>
+  <div class="rv-cta"><a class="btn primary" href="#contact">Be my next happy client</a></div>
 </div></section>
 
 <section class="services" id="services"><div class="wrap">
@@ -222,13 +254,12 @@ dialog::backdrop{background:rgba(14,16,48,.88)}
   <div>
     <h2>Hi, I’m Pavly.</h2>
     <p>I’ve been editing for about two years, focused on promotional videos and Instagram reels. I like short formats where every second has to earn its place.</p>
-    <p>Edit this paragraph with your own story: the tools you use, the kinds of clients you’ve worked with, and how you like to work.</p>
   </div>
   <div class="side">
   <img class="photo" src="img\profile.jpg" alt="Portrait of the video editor" width="300" height="300">
   <div class="stats">
-    <div class="stat"><b>2 years</b>editing experience</div>
-    <div class="stat"><b>Reels + Promos</b>my specialty</div>
+    <div class="stat"><b>2 Years</b>Of Editing Experience</div>
+    <div class="stat"><b>Reels + Promos</b>Are My Specialty</div>
     <div class="stat"><b>Fast turnaround</b>replace with your own detail</div>
   </div>
   </div>
@@ -255,14 +286,14 @@ dialog::backdrop{background:rgba(14,16,48,.88)}
    poster: optional thumbnail image path (e.g. "img/reel1.jpg")
    color: background color shown until you add a poster */
 const projects = [
-  {title:"Attwa", client:"Client or brand", type:"Reel",  video:"https://drive.google.com/file/d/1XRlIrjYWGy9PapTk9Wa8B0Ttso0qhNUB/view?usp=sharing", poster:"img/reel 1.jpg", color:"#2338f5"},
-  {title:"فرغلي", client:"Client or brand", type:"Reel",  video:"https://drive.google.com/file/d/1k6UkR0JbjGSH-6o0KD8CpP5Vyo6D32j8/view?usp=sharing", poster:"img/farghaly.png", color:"#0e1030"},
-  {title:"Beauty Center", client:"Client or brand", type:"Reel",  video:"https://drive.google.com/file/d/17XQ2Uj0P-dN2tbD9SJsWOLNkG81w6xyM/view?usp=sharing", poster:"img/lush.png", color:"#7a5cff"},
-  {title:"Stalion Gym 1", client:"Client or brand", type:"Reel",  video:"https://drive.google.com/file/d/1UOLMAfiETY65xCCbzHynvunqXASXP_vK/view?usp=sharing", poster:"img/reel 5.png", color:"#7a5cff"},
-  {title:"Stalion Gym 2", client:"Client or brand", type:"Reel",  video:"https://drive.google.com/file/d/1qPC2I7hOM0PQLEWhnDb56eSvjgoSm1XO/view?usp=sharing", poster:"img/reel 4.png", color:"#7a5cff"},
-  {title:"Vet Clinic", client:"Client or brand", type:"Promo", video:"https://drive.google.com/file/d/1xGW89BUuJl8HHQR5USOE8uIlR64JjKps/view?usp=sharing", poster:"img/vet.png", color:"#ff5c8a", wide:true},
-  {title:"Course Center", client:"Client or brand", type:"Promo", video:"https://drive.google.com/file/d/1xB8MTIcWVR6VSskLmX30aEp9gByFBD3_/view?usp=sharing", poster:"img/coptic.png", color:"#e08a00", wide:true},
-  {title:"Chat-Gpt", client:"Client or brand", type:"Promo",  video:"https://drive.google.com/file/d/1i9Qe_hAL2_oMVtufbJuRLdyhCr4K83Cu/view?usp=sharing", poster:"img/promo 3.png", color:"#14a37f", wide:true}
+  {title:"Attwa", client:"", type:"Reel",  video:"https://drive.google.com/file/d/1XRlIrjYWGy9PapTk9Wa8B0Ttso0qhNUB/view?usp=sharing", poster:"img/reel 1.jpg", color:"#2338f5"},
+  {title:"فرغلي", client:"", type:"Reel",  video:"https://drive.google.com/file/d/1k6UkR0JbjGSH-6o0KD8CpP5Vyo6D32j8/view?usp=sharing", poster:"img/farghaly.png", color:"#0e1030"},
+  {title:"Beauty Center", client:"", type:"Reel",  video:"https://drive.google.com/file/d/17XQ2Uj0P-dN2tbD9SJsWOLNkG81w6xyM/view?usp=sharing", poster:"img/lush.png", color:"#7a5cff"},
+  {title:"Stalion Gym 1", client:"", type:"Reel",  video:"https://drive.google.com/file/d/1UOLMAfiETY65xCCbzHynvunqXASXP_vK/view?usp=sharing", poster:"img/reel 5.png", color:"#7a5cff"},
+  {title:"Stalion Gym 2", client:"", type:"Reel",  video:"https://drive.google.com/file/d/1qPC2I7hOM0PQLEWhnDb56eSvjgoSm1XO/view?usp=sharing", poster:"img/reel 4.png", color:"#7a5cff"},
+  {title:"Vet Clinic", client:"", type:"Promo", video:"https://drive.google.com/file/d/1xGW89BUuJl8HHQR5USOE8uIlR64JjKps/view?usp=sharing", poster:"img/vet.png", color:"#ff5c8a", wide:true},
+  {title:"Course Center", client:"", type:"Promo", video:"https://drive.google.com/file/d/1xB8MTIcWVR6VSskLmX30aEp9gByFBD3_/view?usp=sharing", poster:"img/coptic.png", color:"#e08a00", wide:true},
+  {title:"Chat-Gpt", client:"", type:"Promo",  video:"https://drive.google.com/file/d/1i9Qe_hAL2_oMVtufbJuRLdyhCr4K83Cu/view?usp=sharing", poster:"img/promo 3.png", color:"#14a37f", wide:true}
 ];
 
 const grid = document.getElementById("grid");
@@ -302,11 +333,11 @@ document.querySelectorAll(".filters button").forEach(btn=>{
 
 document.getElementById("yr").textContent = new Date().getFullYear();
 const eagle = [
-  {title:"Eagle – Video 1", client:"Eagle Real Estate Development", type:"Promo", video:"https://drive.google.com/file/d/100Whe4BVWimSQpzSle12e21m7yZlomz3/view?usp=sharing", poster:"img/golden.png", color:"#2338f5", wide:true},
-  {title:"Eagle – Video 2", client:"Eagle Real Estate Development", type:"Promo", video:"", poster:"img/green.png", color:"#2338f5", wide:true},
-  {title:"Eagle – Video 3", client:"Eagle Real Estate Development", type:"Promo", video:"", poster:"img/rehab.png", color:"#2338f5", wide:true},
-  {title:"Eagle – Video 4", client:"Eagle Real Estate Development", type:"Promo", video:"", poster:"img/review.png", color:"#2338f5", wide:true},
-  {title:"Eagle – Video 5", client:"Eagle Real Estate Development", type:"Promo", video:"", poster:"img/show.png", color:"#2338f5", wide:true}
+  {title:"GOLDEN PLAZA 01", client:"Eagle Real Estate Development", type:"Promo", video:"https://drive.google.com/file/d/100Whe4BVWimSQpzSle12e21m7yZlomz3/view?usp=sharing", poster:"img/golden.png", color:"#2338f5", wide:true},
+  {title:"GREEN PLAZA", client:"Eagle Real Estate Development", type:"Promo", video:"https://drive.google.com/file/d/1e7VSLf17-c8T4HIVXxv8zMNtBXso3UOG/view?usp=sharing", poster:"img/green.png", color:"#2338f5", wide:true},
+  {title:"REHAB PLAZA", client:"Eagle Real Estate Development", type:"Promo", video:"https://drive.google.com/file/d/1Z1qgcKtIi4wWZ51eQyI9zIjU-Z7kTueh/view?usp=sharing", poster:"img/rehab.png", color:"#2338f5", wide:true},
+  {title:"GOLDEN PLAZA REVIEWS", client:"Eagle Real Estate Development", type:"Promo", video:"https://drive.google.com/file/d/1VWaISakogF4vvowW2lXdPi_r-sYmXFV4/view?usp=sharing", poster:"img/review.png", color:"#2338f5", wide:true},
+  {title:"GOLDEN PLAZA 02", client:"Eagle Real Estate Development", type:"Promo", video:"https://drive.google.com/file/d/11SbR98T_5vL-ZMoj5u8iWneAdZODsmo6/view?usp=sharing", poster:"img/show.png", color:"#2338f5", wide:true}
 ];
 const eagleGrid = document.getElementById("eagleGrid");
 if(eagle.every(p=>p.wide)) eagleGrid.classList.add("land");
@@ -321,6 +352,31 @@ eagle.forEach(p=>{
   eagleGrid.appendChild(b);
 });
 render("all");
+/* ===== EDIT YOUR REVIEWS HERE =====
+   text: the client's words (Arabic works too)
+   name / role: who said it
+   color: card background */
+const reviews = [
+  {text:"Replace this with a real quote from a client. One or two short sentences work best.", name:"Eagle", role:"Eagle Real Estate Development", color:"#ffd23f"},
+  {text:"Add what they liked most: the speed, the hooks, the communication, the results.", name:"Client name", role:"Stalion Gym", color:"#ff5c8a"},
+  {text:"Short, punchy reviews look best. Ask clients to mention a specific result.", name:"Client name", role:"Vet Clinic", color:"#9fb0ff"},
+  {text:"Add as many cards as you like. They line up automatically.", name:"Client name", role:"Beauty Center", color:"#f3f4fa"}
+];
+const rvGrid = document.getElementById("rvGrid");
+reviews.forEach(r=>{
+  const initials = r.name.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
+  const c = document.createElement("figure");
+  c.className = "rv";
+  c.style.setProperty("--bg", r.color);
+  c.innerHTML = '<div class="stars" aria-label="5 out of 5 stars">★★★★★</div>'
+    + '<blockquote dir="auto"></blockquote>'
+    + '<figcaption class="who"><div class="av" aria-hidden="true"></div><div><b></b><span></span></div></figcaption>';
+  c.querySelector("blockquote").textContent = r.text;
+  c.querySelector(".av").textContent = initials;
+  c.querySelector("b").textContent = r.name;
+  c.querySelector("span").textContent = r.role;
+  rvGrid.appendChild(c);
+});
 </script>
 </body>
 </html>
