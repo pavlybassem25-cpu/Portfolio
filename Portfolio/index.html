@@ -135,7 +135,8 @@ dialog::backdrop{background:rgba(14,16,48,.88)}
 .case-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px}
 .case-meta span{border:1.5px solid #4a4e86;border-radius:999px;padding:6px 16px;font-size:.85rem;font-weight:700}
 .case-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-.case-grid.land{grid-template-columns:repeat(3,1fr)}
+.case-grid.land{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
+.case-grid.land .card{flex:0 0 calc((100% - 32px)/3)}
 .case .card p{color:#b9bcd8}
 .case-panel{position:relative}
 .case-logo{position:absolute;top:36px;right:44px;width:140px;height:auto}
